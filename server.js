@@ -6,14 +6,21 @@
  * Require Statements
  *************************/
 const express = require("express")
+const path = require("path")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const indexController = require("./controllers/indexController")
 
 /* ***********************
  * Routes
  *************************/
 app.use(static)
+
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "views"))
+
+app.get("/", indexController.buildHome)
 
 /* ***********************
  * Local Server Information
