@@ -10,7 +10,7 @@ const path = require("path")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
-const indexController = require("./controllers/indexController")
+const indexRoutes = require("./routes/index")
 
 /* ***********************
  * Routes
@@ -20,7 +20,7 @@ app.use(static)
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
-app.get("/", indexController.buildHome)
+app.use("/", indexRoutes)
 
 /* ***********************
  * Local Server Information
