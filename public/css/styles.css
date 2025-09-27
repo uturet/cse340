@@ -1,4 +1,5 @@
-/******* Change Box Model ***************/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 *,
 *:before,
 *:after {
@@ -7,11 +8,8 @@
   margin: 0;
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 * {
   font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
   font-style: normal;
 }
 
@@ -180,7 +178,7 @@ footer {
     width: 18%;
   }
 
-  h2 {
+  h2, h1 {
     font-size: 2rem;
   }
 
