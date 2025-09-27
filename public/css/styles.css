@@ -3,4 +3,71 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+body {
+  padding: 15px;
+}
+
+.log-login-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 33px;
+}
+
+.logo, .logo:target {
+  font-size: 2rem;
+  font-weight: 800;
+  color: black;
+  text-decoration: none;
+}
+
+.login-wrapper {
+
+}
+
+nav {
+  background-color: #242333;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav li {
+ width: 20%;
+}
+
+nav a, nav a:target {
+  background-color: #242333;
+  color: white;
+  text-decoration: none;
+  padding: 1rem 0;
+  display: block;
+  text-align: center;
+  transition: all .3s linear;
+}
+
+nav a:hover {
+  background-color: #3a3950;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 20px;
 }
