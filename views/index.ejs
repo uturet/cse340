@@ -1,90 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title || "Home" %></title>
-  <link rel="stylesheet" href="css/styles.css" media="screen">
-  <script src="js/script.js"></script>
-</head>
-<body>
-<div class="body-wrapper">
-  <header>
-    <div class="log-login-wrapper">
-      <a href="/" class="logo">CSE Motors</a>
-      <div class="login-wrapper">
-        <a href="#">My Account</a>
-      </div>
+<%- include('./partials/head') %>
+<%- include('./partials/header') %>
+
+<main>
+  <section class="card">
+    <h1>Welcome to CSE Motors!</h1>
+    <div class="ad-card">
+      <h3>DMC Delorian</h3>
+      <p>3 Cup holders</p>
+      <p>Superman doors</p>
+      <p>Fuzzy dice!</p>
+      <button class="ad-btn">Own Today</button>
     </div>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Custom</a></li>
-        <li><a href="#">Sedan</a></li>
-        <li><a href="#">SUV</a></li>
-        <li><a href="#">Truck</a></li>
+    <img src="/images/vehicles/delorean.jpg" alt="">
+  </section>
+
+  <div class="content">
+    <section>
+      <h2>DMC Delorian Reviews</h2>
+      <ul class="bullet-points">
+        <li>"So fast it's almost like travveling in time." (4/5)</li>
+        <li>"Coolest ride on the road." (4/5)</li>
+        <li>"I'm feeling McFly!" (5/5)</li>
+        <li>"The most futuristic ride of our day." (4.5/5)</li>
+        <li>"80's living and I love it!" (5/5)</li>
       </ul>
-    </nav>
-  </header>
-  <main>
-    <section class="card">
-      <h1>Welcome to CSE Motors!</h1>
-      <div class="ad-card">
-        <h3>DMC Delorian</h3>
-        <p>3 Cup holders</p>
-        <p>Superman doors</p>
-        <p>Fuzzy dice!</p>
-        <button class="ad-btn">Own Today</button>
-      </div>
-      <img src="/images/vehicles/delorean.jpg" alt="">
     </section>
 
-    <div class="content">
-      <section>
-        <h2>DMC Delorian Reviews</h2>
-        <ul class="bullet-points">
-          <li>"So fast it's almost like travveling in time." (4/5)</li>
-          <li>"Coolest ride on the road." (4/5)</li>
-          <li>"I'm feeling McFly!" (5/5)</li>
-          <li>"The most futuristic ride of our day." (4.5/5)</li>
-          <li>"80's living and I love it!" (5/5)</li>
-        </ul>
-      </section>
-  
-      <section>
-        <h2>Delorian Upgrades</h2>
-        <div class="grid">
-          <div class="grid-item">
-            <div class="grid-item-img">
-              <img src="/images/upgrades/flux-cap.png" alt="">
-            </div>
-            <a href="#">Flux Capacitor</a>
+    <section>
+      <h2>Delorian Upgrades</h2>
+      <div class="grid">
+        <div class="grid-item">
+          <div class="grid-item-img">
+            <img src="/images/upgrades/flux-cap.png" alt="">
           </div>
-          <div class="grid-item">
-            <div class="grid-item-img">
-              <img src="/images/upgrades/flame.jpg" alt="">
-            </div>
-            <a href="#">Flame Decals</a>
-          </div>
-          <div class="grid-item">
-            <div class="grid-item-img">
-              <img src="/images/upgrades/bumper_sticker.jpg" alt="">
-            </div>
-            <a href="#">Bumper Stickers</a>
-          </div>
-          <div class="grid-item">
-            <div class="grid-item-img">
-              <img src="/images/upgrades/hub-cap.jpg" alt="">
-            </div>
-            <a href="#">Hub Caps</a>
-          </div>
+          <a href="#">Flux Capacitor</a>
         </div>
-      </section>
-    </div>
-  </main>
-  <footer>
-    <p>© 2025, CSE 340 App</p>
-  </footer>
-</div>
-</body>
-</html>
+        <div class="grid-item">
+          <div class="grid-item-img">
+            <img src="/images/upgrades/flame.jpg" alt="">
+          </div>
+          <a href="#">Flame Decals</a>
+        </div>
+        <div class="grid-item">
+          <div class="grid-item-img">
+            <img src="/images/upgrades/bumper_sticker.jpg" alt="">
+          </div>
+          <a href="#">Bumper Stickers</a>
+        </div>
+        <div class="grid-item">
+          <div class="grid-item-img">
+            <img src="/images/upgrades/hub-cap.jpg" alt="">
+          </div>
+          <a href="#">Hub Caps</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<%- include('./partials/footer') %>
