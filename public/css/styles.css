@@ -452,6 +452,11 @@ ul.bullet-points li {
   height: 80px;
 }
 
+.error-title {
+  text-align: center;
+  margin-top: 100px;
+}
+
 footer {
   margin-top: auto;
   text-align: center;
