@@ -11,6 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const indexRoutes = require("./routes/index")
+const inventoryRoutes = require("./routes/inventory")
 
 /* ***********************
  * Routes
@@ -21,6 +22,7 @@ app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 
 app.use("/", indexRoutes)
+app.use("/inventory", inventoryRoutes)
 
 /* ***********************
  * Local Server Information

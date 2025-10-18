@@ -1,9 +1,8 @@
 <nav>
   <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Custom</a></li>
-    <li><a href="#">Sedan</a></li>
-    <li><a href="#">SUV</a></li>
-    <li><a href="#">Truck</a></li>
+    <li><a href="/">Home</a></li>
+    <% classifications.forEach(cls => { %>
+      <li><a href="/classifications/<%= cls.classification_id %>"><%= cls.classification_name %></a></li>
+    <% }) %>
   </ul>
 </nav>

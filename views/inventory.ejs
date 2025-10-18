@@ -1,0 +1,77 @@
+
+<%- include('./partials/head') %>
+<%- include('./partials/header', { classifications }) %>
+
+    <%
+      const priceFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })
+      const milesValue = Number(vehicle.inv_miles)
+    %>
+
+    <div class="grid">
+      <section class="card" aria-label="Vehicle media gallery">
+        <div class="card-head">
+          <div class="left">This vehicle has passed inspection by an ASE-certified technician.</div>
+          <div class="brand">enterprise certified®</div>
+        </div>
+
+        <img class="img-lg" src="<%= vehicle.inv_image %>">
+      </section>
+
+      <aside class="panel" aria-label="Vehicle details">
+        <div class="title">
+          <h1><%= title %></h1>
+          <small>No-Haggle dealer listing • Enterprise-style layout replica</small>
+        </div>
+        <div class="price-row">
+          
+          <div class="mileage-badge">
+            <span class="lbl">MILEAGE</span>
+            <span class="val"><%= milesValue.toLocaleString("en-US") %></span>
+          </div>
+          <div class="price-block">
+            <p class="price-title">No-Haggle Price</p>
+            <p class="price"><%= priceFormatter.format(vehicle.inv_price) %></p>
+            <p class="disclaimer">Does not include $249 Dealer Documentary Service Fee.</p>
+          </div>
+        </div>
+
+        <div class="est-pay">
+          <a href="#" aria-disabled="true">Estimate Payments</a>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#" aria-disabled="true">Start My Purchase</a>
+          <a class="btn" href="#" aria-disabled="true">Contact Us</a>
+          <a class="btn" href="#" aria-disabled="true">Schedule Test Drive</a>
+          <a class="btn" href="#" aria-disabled="true">Apply for Financing</a>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="k">Mileage:</div><div class="v"><%= milesValue.toLocaleString("en-US") %></div></div>
+          <div class="spec"><div class="k">Make:</div><div class="v"><%= vehicle.inv_make %></div></div>
+          <div class="spec"><div class="k">Model:</div><div class="v"><%= vehicle.inv_model %></div></div>
+          <div class="spec"><div class="k">Year:</div><div class="v"><%= vehicle.inv_year %></div></div>
+
+          <div class="spec"><div class="k">Ext. Color:</div><div class="v"><%= vehicle.inv_color %></div></div>
+
+          <div class="spec"><div class="k">Fuel Type:</div><div class="v">Gasoline</div></div>
+          <div class="spec"><div class="k">Drivetrain:</div><div class="v">Front Wheel Drive</div></div>
+
+          <div class="spec"><div class="k">Transmission:</div><div class="v">Xtronic CVT</div></div>
+
+          <div class="spec"><div class="k">Description:</div><div class="v"><%= vehicle.inv_description %></div></div>
+        </div>
+
+        <div class="stockline">
+          <div>Vehicle: <span class="strong">2019 Nissan Sentra SV CVT</span></div>
+          <div>Location: <span class="strong">Visit Us</span></div>
+        </div>
+
+        <div class="contact">
+          <a class="phone">Call Us • 801-396-7886</a>
+          <a class="visit">Visit Us • Directions</a>
+        </div>
+      </aside>
+    </div>
+
+<%- include('./partials/footer') %>
