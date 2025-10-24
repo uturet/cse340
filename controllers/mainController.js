@@ -6,11 +6,11 @@ mainController.error = async (req, res, next) => {
     try {
       const classifications = await classificationModel.getAll()
       const title = `Error`
-  
       return res.render("error", {
         classifications,
         title
       })
+      
   
     } catch (error) {
       return next(error)
