@@ -1,0 +1,61 @@
+<%- include('./partials/head') %>
+<%- include('./partials/header', { classifications }) %>
+
+<main class="inventory-management">
+  <section class="page-heading">
+    <div>
+      <h1>Inventory Management</h1>
+      <p>Review current inventory and jump into the workflows you use most.</p>
+    </div>
+    <div class="cta-group">
+      <a class="btn primary" href="/inventory/add-inventory">Add Inventory</a>
+      <a class="btn" href="/inventory/add-classification">Add Classification</a>
+    </div>
+  </section>
+
+  <section class="message-stack">
+    <%- messages() %>
+  </section>
+
+  <section class="table-card">
+    <div class="table-head">
+      <div>
+        <h2>Vehicle Catalog</h2>
+        <p class="muted"><%= inventoryList.length %> vehicle<%= inventoryList.length === 1 ? '' : 's' %></p>
+      </div>
+    </div>
+
+    <% if (!inventoryList.length) { %>
+      <p>No inventory found. Add a vehicle to get started.</p>
+    <% } else { %>
+      <div class="table-wrapper">
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th>Classification</th>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Year</th>
+              <th>Price</th>
+              <th>Miles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% inventoryList.forEach(item => { %>
+              <tr>
+                <td><%= item.classification_name %></td>
+                <td><%= item.inv_make %></td>
+                <td><a href="/inventory-model/<%= item.inv_id %>"><%= item.inv_model %></a></td>
+                <td><%= item.inv_year %></td>
+                <td>$<%= Number(item.inv_price).toLocaleString("en-US") %></td>
+                <td><%= Number(item.inv_miles).toLocaleString("en-US") %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('./partials/footer') %>

@@ -14,6 +14,7 @@ const indexRoutes = require("./routes/index")
 const inventoryRoutes = require("./routes/inventory")
 const session = require("express-session")
 const pool = require('./database/')
+const bodyParser = require("body-parser")
 
 /* ***********************
  * Middleware
@@ -28,7 +29,8 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
@@ -46,6 +48,9 @@ app.set("views", path.join(__dirname, "views"))
 
 app.use("/", indexRoutes)
 app.use("/inventory", inventoryRoutes)
+// Account routes
+app.use("/account", require("./routes/accountRoute"))
+
 
 /* ***********************
  * Local Server Information
