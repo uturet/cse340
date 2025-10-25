@@ -26,12 +26,8 @@
 }
 
 :root{
-  --muted:#6b7280;
-  --cta:#2563eb;
-  --cta-2:#0ea5e9;
   --border:#e5e7eb;
   --chip:#f3f4f6;
-  --shadow:0 6px 20px rgba(0,0,0,.08);
   --radius:14px;
 }
 
@@ -96,7 +92,6 @@ body{
   background: white;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
   overflow:hidden;
 }
 
@@ -106,7 +101,6 @@ body{
   background: white;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
   overflow:hidden;
   display: flex;
   justify-content: center;
@@ -166,7 +160,6 @@ body{
   background: white;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
   padding:18px;
   position:relative;
 }
@@ -237,7 +230,6 @@ body{
   justify-content:center;
   gap:10px;
   padding:12px 14px;
-  border-radius:10px;
   border:1px solid var(--border);
   font-weight:600;
   cursor:pointer;
@@ -248,15 +240,8 @@ body{
   user-select:none;
 }
 
-.btn.primary{
-  background:var(--cta);
-  color:#fff;
-  border-color:transparent;
-}
-
 .btn:hover{ 
   transform:translateY(-1px); 
-  box-shadow:0 6px 14px rgba(0,0,0,.07) 
 }
 
 .btn:active{ 
@@ -503,7 +488,6 @@ form input {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 18px;
 }
 
@@ -549,14 +533,10 @@ form input {
   list-style: none;
   margin: 0;
   padding: 12px 16px;
-  border-radius: 12px;
   border: 1px solid;
 }
 
 #messages ul.success {
-  background: #ecfdf5;
-  border-color: #6ee7b7;
-  color: #065f46;
 }
 
 #messages ul.error {
@@ -602,8 +582,6 @@ form input {
 .form-card {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -621,7 +599,6 @@ form input {
 .form-card textarea {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 10px;
   padding: 10px 12px;
   font-size: 1rem;
 }
