@@ -8,5 +8,6 @@ router.post("/add-classification", inventoryController.createClassification)
 router.get("/add-inventory", inventoryController.buildAddInventory)
 router.post("/add-inventory", inventoryController.createInventory)
 router.get("/:id", inventoryController.buildInventory)
+router.post("/:id", inventoryController.deleteInventory)
 
 module.exports = router

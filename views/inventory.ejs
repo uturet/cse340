@@ -72,6 +72,13 @@
           <a class="visit">Visit Us • Directions</a>
         </div>
       </aside>
+      
+      <% if(isAuth) { %>
+        <form action="/inventory-model/<%= vehicle.inv_id %>" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+      <% } %>
+
     </div>
 
 <%- include('./partials/footer') %>

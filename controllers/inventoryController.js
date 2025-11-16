@@ -15,9 +15,10 @@ inventoryController.buildInventory = async (req, res, next) => {
     }
 
     const title = `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`
-
+    const isAuth = res.locals.loggedin
     return res.render("inventory", {
       title,
+      isAuth,
       vehicle,
       classifications,
     })
@@ -199,6 +200,24 @@ inventoryController.createInventory = async (req, res, next) => {
         errors: ["Invalid classification selection. Please try again."],
       })
     }
+    return next(error)
+  }
+}
+
+inventoryController.deleteInventory = async (req, res, next) => {
+  try {
+    const {id} = req.params
+    console.log(res.locals.loggedin, id)
+    if (res.locals.loggedin && id) {
+      const result = await inventoryModel.deleteInventoryItem(id)
+      req.flash("notice", "Item has been deleted.")
+      return res.redirect("/inventory")
+    }
+    else {
+      throw new Error('Invalid id')
+    }
+  } catch (error) {
+    console.log(error.message)
     return next(error)
   }
 }
