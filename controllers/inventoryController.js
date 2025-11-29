@@ -18,6 +18,7 @@ inventoryController.buildInventory = async (req, res, next) => {
     const isAuth = res.locals.loggedin
     return res.render("inventory", {
       title,
+      accountData: res.locals.accountData,
       isAuth,
       vehicle,
       classifications,
@@ -34,8 +35,10 @@ inventoryController.buildManagement = async (req, res, next) => {
       inventoryModel.getAllWithClassification(),
     ])
 
+    console.log(res.locals.accountData)
     return res.render("inventory-management", {
       isAuth: res.locals.loggedin,
+      accountData: res.locals.accountData,
       title: "Inventory Management",
       classifications,
       inventoryList,
@@ -50,6 +53,7 @@ inventoryController.buildAddClassification = async (req, res, next) => {
     const classifications = await classificationModel.getAll()
 
     return res.render("inventory-add-classification", {
+      accountData: res.locals.accountData,
       isAuth: res.locals.loggedin,
       title: "Add Classification",
       classifications,
@@ -70,6 +74,7 @@ inventoryController.createClassification = async (req, res, next) => {
     if (!name) {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-classification", {
+        accountData: res.locals.accountData,
         isAuth: res.locals.loggedin,
         title: "Add Classification",
         classifications,
@@ -85,6 +90,7 @@ inventoryController.createClassification = async (req, res, next) => {
     if (error.code === "23505") {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-classification", {
+        accountData: res.locals.accountData,
         isAuth: res.locals.loggedin,
         title: "Add Classification",
         classifications,
@@ -101,6 +107,7 @@ inventoryController.buildAddInventory = async (req, res, next) => {
     const classifications = await classificationModel.getAll()
 
     return res.render("inventory-add-inventory", {
+      accountData: res.locals.accountData,
       isAuth: res.locals.loggedin,
       title: "Add Inventory",
       classifications,
@@ -181,6 +188,7 @@ inventoryController.createInventory = async (req, res, next) => {
     try {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-inventory", {
+        accountData: res.locals.accountData,
         isAuth: res.locals.loggedin,
         title: "Add Inventory",
         classifications,
@@ -200,6 +208,7 @@ inventoryController.createInventory = async (req, res, next) => {
     if (error.code === "23503") {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-inventory", {
+        accountData: res.locals.accountData,
         isAuth: res.locals.loggedin,
         title: "Add Inventory",
         classifications,

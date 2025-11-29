@@ -7,6 +7,7 @@ mainController.error = async (req, res, next) => {
       const classifications = await classificationModel.getAll()
       const title = `Error`
       return res.render("error", {
+        accountData: res.locals.accountData,
         isAuth: res.locals.loggedin,
         classifications,
         title

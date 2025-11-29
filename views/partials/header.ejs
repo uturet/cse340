@@ -3,6 +3,7 @@
     <a href="/" class="logo">CSE Motors</a>
     <div class="login-wrapper">
       <% if (isAuth) { %>
+        <span><%- accountData.account_firstname %></span>
         <a href="/account/logout" class="manage-link">Logout</a>
         <a href="/inventory" class="manage-link">Inventory</a>
       <% } else { %>
