@@ -114,6 +114,26 @@ async function accountLogin(req, res) {
   }
 }
 
+async function buildManagement(req, res, next) {
+  try {
+    const [classifications, inventoryList] = await Promise.all([
+      classificationModel.getAll(),
+      inventoryModel.getAllWithClassification(),
+    ])
+
+    console.log(res.locals.accountData)
+    return res.render("account-management", {
+      isAuth: res.locals.loggedin,
+      accountData: res.locals.accountData,
+      title: "account Management",
+      classifications,
+      inventoryList,
+    })
+  } catch (error) {
+    return next(error)
+  }
+}
+
 /* ****************************************
 *  Deliver registration view
 * *************************************** */
@@ -143,4 +163,4 @@ async function buildLogin(req, res, next) {
     })
 }
   
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, accountLogout }
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, accountLogout, buildManagement }

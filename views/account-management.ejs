@@ -1,0 +1,26 @@
+<%- include('./partials/head') %>
+<%- include('./partials/header', { classifications, isAuth, accountData }) %>
+
+<main class="inventory-management">
+  <section class="page-heading">
+    <div>
+      <h1>Account Management</h1>
+    </div>
+  </section>
+
+  <section class="message-stack">
+
+    <%- messages() %>
+
+    <h3>Welcome <%= accountData.account_firstname %></h3>
+    <a href="account/edit">Edit account information</a>
+
+    <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+    <h3>Inventory Management</h3>
+    <a href="/inventory">Inventory Management</a>
+    <% } %>
+  </section>
+
+</main>
+
+<%- include('./partials/footer') %>

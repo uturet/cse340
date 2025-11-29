@@ -73,7 +73,7 @@
         </div>
       </aside>
       
-      <% if(isAuth) { %>
+      <% if(isAuth && (accountData.account_type === "Employee" || accountData.account_type === "Admin")) { %>
         <form action="/inventory-model/<%= vehicle.inv_id %>" method="POST">
           <button type="submit">Delete</button>
         </form>

@@ -5,6 +5,12 @@
 <main>
     <%- messages() %>
 
+    <% if (messages.message) { %>
+    <% messages.message.forEach(msg => { %>
+        <div class="alert alert-warning"><%= msg %></div>
+    <% }) %>
+    <% } %>
+
     <section>
         <form action="/account/login" method="POST">
             <div>

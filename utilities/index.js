@@ -51,6 +51,16 @@ Util.handleErrors = (fn) => (req, res, next) => {
 };
 
 
+Util.ProtectedSection = (fn) => (req, res, next) => {
+  const accountData = res.locals.accountData;
+  if (accountData && (accountData.account_type === 'Employee' || accountData.account_type === 'Admin')) {
+    return fn(req, res, next);
+  } else {
+    req.flash("notice", "Please check your credentials and try again.")
+    return res.redirect("/account/login");
+  }
+};
+
 /* ************************
  * Constructs the nav HTML list
  ************************** */

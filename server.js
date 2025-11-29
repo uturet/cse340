@@ -54,7 +54,10 @@ app.use("/", indexRoutes)
 app.use("/inventory", inventoryRoutes)
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
-
+app.use((req, res, next) => {
+  res.locals.messages = req.flash(); // all flash messages available in `messages`
+  next();
+});
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
