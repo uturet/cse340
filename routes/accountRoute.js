@@ -20,6 +20,12 @@ router.get(
   utilities.handleErrors(accountController.accountLogout)
 )
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+
+router.get("/edit", utilities.checkLogin, utilities.handleErrors(accountController.buildEdit))
+router.post("/edit", utilities.checkLogin, utilities.handleErrors(accountController.editUser))
+router.post("/edit-password", utilities.checkLogin, utilities.handleErrors(accountController.editPassword))
+
+
 router.get('/register', accountController.buildRegister)
 // Process the registration data
 router.post(

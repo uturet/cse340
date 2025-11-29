@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header', { classifications, isAuth, accountData }) %>
+
+<main class="inventory-management">
+  <section class="page-heading">
+    <div>
+      <h1>Account Management</h1>
+    </div>
+  </section>
+
+  <section class="message-stack">
+
+    <%- messages() %>
+
+    <form action="/account/edit" method="post">
+      <label for="account_firstname">First Name</label>
+      <input
+        type="text"
+        id="account_firstname"
+        name="account_firstname"
+        placeholder="e.g., Adam"
+        maxlength="50"
+        required
+        value="<%= accountData?.account_firstname %>"
+      >
+
+      <label for="account_lastname">First Name</label>
+      <input
+        type="text"
+        id="account_lastname"
+        name="account_lastname"
+        placeholder="e.g., Sandler"
+        maxlength="50"
+        required
+        value="<%= accountData?.account_lastname %>"
+      >
+
+      <label for="account_email">First Name</label>
+      <input
+        type="text"
+        id="account_email"
+        name="account_email"
+        placeholder="e.g., Sandler"
+        maxlength="50"
+        required
+        value="<%= accountData?.account_email %>"
+      >
+
+      <button type="submit" class="btn primary">Save Changes</button>
+    </form>
+
+    <form action="/account/edit-password" method="post">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        maxlength="50"
+        required
+      >
+
+      <button type="submit" class="btn primary">Save Password</button>
+    </form>
+
+  </section>
+
+</main>
+
+<%- include('../partials/footer') %>

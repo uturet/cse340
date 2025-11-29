@@ -116,9 +116,8 @@ async function accountLogin(req, res) {
 
 async function buildManagement(req, res, next) {
   try {
-    const [classifications, inventoryList] = await Promise.all([
+    const [classifications] = await Promise.all([
       classificationModel.getAll(),
-      inventoryModel.getAllWithClassification(),
     ])
 
     console.log(res.locals.accountData)
@@ -127,7 +126,6 @@ async function buildManagement(req, res, next) {
       accountData: res.locals.accountData,
       title: "account Management",
       classifications,
-      inventoryList,
     })
   } catch (error) {
     return next(error)
@@ -162,5 +160,193 @@ async function buildLogin(req, res, next) {
         errors: null
     })
 }
-  
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, accountLogout, buildManagement }
+
+
+/* ****************************************
+ *  Deliver edit view
+ * ************************************ */
+async function buildEdit(req, res, next) {
+  try {
+    if (!res.locals.loggedin || !res.locals.accountData) {
+      req.flash("notice", "You must be logged in to edit your account.");
+      return res.redirect("/account/login");
+    }
+
+    const classifications = await classificationModel.getAll();
+    const nav = await utilities.getNav();
+
+    return res.render("account/edit", {
+      accountData: res.locals.accountData,
+      isAuth: res.locals.loggedin,
+      title: "Edit Account",
+      nav,
+      classifications,
+      errors: null,
+      firstname: res.locals.accountData.account_firstname || "",
+      lastname: res.locals.accountData.account_lastname || "",
+      email: res.locals.accountData.account_email || "",
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
+/* ****************************************
+ *  Process update of user details (name/email)
+ * ************************************ */
+async function editUser(req, res, next) {
+  try {
+    if (!res.locals.loggedin || !res.locals.accountData) {
+      req.flash("notice", "You must be logged in to perform that action.");
+      return res.redirect("/account/login");
+    }
+
+    const { account_firstname, account_lastname, account_email } = req.body;
+    const accountId = res.locals.accountData.account_id;
+
+    const errors = [];
+    if (!account_firstname || account_firstname.trim().length === 0) errors.push("First name is required.");
+    if (!account_lastname || account_lastname.trim().length === 0) errors.push("Last name is required.");
+    if (!account_email || account_email.trim().length === 0) errors.push("Email is required.");
+
+    if (errors.length) {
+
+      const classifications = await classificationModel.getAll();
+      const nav = await utilities.getNav();
+      return res.status(400).render("account/edit", {
+        accountData: res.locals.accountData,
+        isAuth: res.locals.loggedin,
+        title: "Edit Account",
+        nav,
+        classifications,
+        errors,
+        firstname,
+        lastname,
+        email,
+      });
+    }
+
+    const updateResult = await accountModel.updateAccount(
+      accountId, account_firstname.trim(), account_lastname.trim(), account_email.trim());
+
+    if (updateResult) {
+
+      const accountData = await accountModel.getAccountByEmail(account_email)
+      delete accountData.account_password
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      if(process.env.NODE_ENV === 'development') {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+      }
+
+      req.flash("notice", "Account information updated successfully.");
+      return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Unable to update account information. Please try again.");
+      const classifications = await classificationModel.getAll();
+      const nav = await utilities.getNav();
+      return res.status(500).render("account/edit", {
+        accountData: res.locals.accountData,
+        isAuth: res.locals.loggedin,
+        title: "Edit Account",
+        nav,
+        classifications,
+        errors: ["Update failed."],
+        firstname,
+        lastname,
+        email,
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+}
+
+/* ****************************************
+ *  Process password change
+ * ************************************ */
+async function editPassword(req, res, next) {
+  try {
+    if (!res.locals.loggedin || !res.locals.accountData) {
+      req.flash("notice", "You must be logged in to perform that action.");
+      return res.redirect("/account/login");
+    }
+
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const accountId = res.locals.accountData.account_id;
+
+    const errors = [];
+    if (!currentPassword) errors.push("Current password is required.");
+    if (!newPassword || newPassword.length < 8) errors.push("New password must be at least 8 characters.");
+    if (newPassword !== confirmPassword) errors.push("New password and confirmation do not match.");
+
+    if (errors.length) {
+      const classifications = await classificationModel.getAll();
+      const nav = await utilities.getNav();
+      return res.status(400).render("account/edit", {
+        accountData: res.locals.accountData,
+        isAuth: res.locals.loggedin,
+        title: "Edit Account",
+        nav,
+        classifications,
+        errors,
+      });
+    }
+
+    const dbAccount = await accountModel.getAccountById(accountId);
+    if (!dbAccount || !dbAccount.account_password) {
+      req.flash("notice", "Unable to verify current password. Please contact support.");
+      return res.redirect("/account/edit");
+    }
+
+    const passwordMatches = await bcrypt.compare(currentPassword, dbAccount.account_password);
+    if (!passwordMatches) {
+      const classifications = await classificationModel.getAll();
+      const nav = await utilities.getNav();
+      return res.status(400).render("account/edit", {
+        accountData: res.locals.accountData,
+        isAuth: res.locals.loggedin,
+        title: "Edit Account",
+        nav,
+        classifications,
+        errors: ["Current password is incorrect."],
+      });
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+    const pwUpdateResult = await accountModel.updatePassword(accountId, hashed);
+
+    if (pwUpdateResult) {
+      req.flash("notice", "Password updated successfully.");
+      return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Failed to update password. Please try again later.");
+      const classifications = await classificationModel.getAll();
+      const nav = await utilities.getNav();
+      return res.status(500).render("account/edit", {
+        accountData: res.locals.accountData,
+        isAuth: res.locals.loggedin,
+        title: "Edit Account",
+        nav,
+        classifications,
+        errors: ["Failed to update password."],
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+}
+
+
+module.exports = { 
+  buildLogin,
+  buildRegister,
+  registerAccount,
+  accountLogin,
+  accountLogout,
+  buildManagement,
+  buildEdit,
+  editUser,
+  editPassword,
+}

@@ -13,7 +13,7 @@
     <%- messages() %>
 
     <h3>Welcome <%= accountData.account_firstname %></h3>
-    <a href="account/edit">Edit account information</a>
+    <a href="/account/edit">Edit account information</a>
 
     <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
     <h3>Inventory Management</h3>
