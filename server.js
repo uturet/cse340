@@ -55,13 +55,14 @@ app.use("/inventory", inventoryRoutes)
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
 
-
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+const port = process.env.PORT || "5050"
+const host = process.env.HOST || "localhost"
+
+console.log(host, port)
 
 /* ***********************
  * Log statement to confirm server operation

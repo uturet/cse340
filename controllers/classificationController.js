@@ -13,6 +13,7 @@ classificationController.buildclassification = async (req, res, next) => {
     const title = `${cls.classification_name} Vehicles`
 
     return res.render("classification", {
+      isAuth: res.locals.loggedin,
       title,
       classifications,
       cls,

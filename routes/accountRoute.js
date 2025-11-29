@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const accountController = require("../controllers/accountController")
+const inventoryController = require("../controllers/inventoryController")
 const utilities = require("../utilities")
 const regValidate = require('../utilities/account-validation')
 
@@ -13,7 +14,13 @@ router.post(
   // regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 )
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get(
+  "/logout",
+  // regValidate.loginRules(),
+  // regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogout)
+)
+router.get("/", utilities.checkLogin, utilities.handleErrors(inventoryController.buildManagement))
 router.get('/register', accountController.buildRegister)
 // Process the registration data
 router.post(

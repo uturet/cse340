@@ -1,5 +1,5 @@
 <%- include('./partials/head') %>
-<%- include('./partials/header') %>
+<%- include('./partials/header', { classifications, isAuth }) %>
 
 <%
   const priceFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })

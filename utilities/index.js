@@ -43,7 +43,12 @@ Util.checkJWTToken = (req, res, next) => {
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+Util.handleErrors = (fn) => (req, res, next) => {
+  if (typeof fn !== "function") {
+    throw new TypeError("Expected a function");
+  }
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
 
 
 /* ************************

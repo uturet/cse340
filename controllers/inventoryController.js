@@ -35,6 +35,7 @@ inventoryController.buildManagement = async (req, res, next) => {
     ])
 
     return res.render("inventory-management", {
+      isAuth: res.locals.loggedin,
       title: "Inventory Management",
       classifications,
       inventoryList,
@@ -49,6 +50,7 @@ inventoryController.buildAddClassification = async (req, res, next) => {
     const classifications = await classificationModel.getAll()
 
     return res.render("inventory-add-classification", {
+      isAuth: res.locals.loggedin,
       title: "Add Classification",
       classifications,
       formData: { classification_name: "" },
@@ -68,6 +70,7 @@ inventoryController.createClassification = async (req, res, next) => {
     if (!name) {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-classification", {
+        isAuth: res.locals.loggedin,
         title: "Add Classification",
         classifications,
         formData: { classification_name: req.body.classification_name || "" },
@@ -82,6 +85,7 @@ inventoryController.createClassification = async (req, res, next) => {
     if (error.code === "23505") {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-classification", {
+        isAuth: res.locals.loggedin,
         title: "Add Classification",
         classifications,
         formData: { classification_name: req.body.classification_name },
@@ -97,6 +101,7 @@ inventoryController.buildAddInventory = async (req, res, next) => {
     const classifications = await classificationModel.getAll()
 
     return res.render("inventory-add-inventory", {
+      isAuth: res.locals.loggedin,
       title: "Add Inventory",
       classifications,
       formData: {},
@@ -176,6 +181,7 @@ inventoryController.createInventory = async (req, res, next) => {
     try {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-inventory", {
+        isAuth: res.locals.loggedin,
         title: "Add Inventory",
         classifications,
         formData,
@@ -194,6 +200,7 @@ inventoryController.createInventory = async (req, res, next) => {
     if (error.code === "23503") {
       const classifications = await classificationModel.getAll()
       return res.status(400).render("inventory-add-inventory", {
+        isAuth: res.locals.loggedin,
         title: "Add Inventory",
         classifications,
         formData,

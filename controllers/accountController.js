@@ -5,6 +5,23 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 bcrypt = require('bcrypt')
 
+
+/* ****************************************
+*  Process logout request
+* *************************************** */
+async function accountLogout(req, res) {
+  // Clear the JWT cookie
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== "development", // match cookie options
+  });
+
+  // Optionally redirect to login page with a flash message
+  req.flash("notice", "You have successfully logged out.");
+  res.redirect("/account/login");
+}
+
+
 /* ****************************************
 *  Process Registration
 * *************************************** */
@@ -26,6 +43,7 @@ async function registerAccount(req, res) {
         `Congratulations, you\'re registered ${firstname}. Please log in.`
       )
       res.status(201).render("account/login", {
+        isAuth: res.locals.loggedin,
         title: "Login",
         classifications,
         nav,
@@ -33,6 +51,7 @@ async function registerAccount(req, res) {
     } else {
       req.flash("notice", "Sorry, the registration failed.")
       res.status(501).render("account/register", {
+        isAuth: res.locals.loggedin,
         title: "Registration",
         classifications,
         nav,
@@ -53,6 +72,7 @@ async function accountLogin(req, res) {
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
+      isAuth: res.locals.loggedin,
       title: "Login",
       nav,
       errors: null,
@@ -76,6 +96,7 @@ async function accountLogin(req, res) {
     else {
       req.flash("message notice", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
+        isAuth: res.locals.loggedin,
         title: "Login",
         nav,
         errors: null,
@@ -96,6 +117,7 @@ async function buildRegister(req, res, next) {
     const classifications = await classificationModel.getAll()
     let nav = await utilities.getNav()
     res.render("account/register", {
+      isAuth: res.locals.loggedin,
       title: "Register",
       nav,
       classifications,
@@ -107,6 +129,7 @@ async function buildLogin(req, res, next) {
     const classifications = await classificationModel.getAll()
     let nav = await utilities.getNav()
     res.render("account/login", {
+      isAuth: res.locals.loggedin,
         title: "Login",
         nav,
         classifications,
@@ -114,4 +137,4 @@ async function buildLogin(req, res, next) {
     })
 }
   
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin }
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, accountLogout }
