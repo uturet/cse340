@@ -79,6 +79,59 @@
         </form>
       <% } %>
 
+      <section class="card" style="width: 100%; margin-bottom: 20px;" aria-label="Review section">
+        <div class="card-head">
+          <div class="left"><h3>Reviews</h3></div>
+        </div>
+        <div class="card-body">
+
+          <div>
+            <p><b>Name Name</b></p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! 
+            </p>
+          </div>
+
+          <div>
+              <p><b>Name Name</b></p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! 
+              </p>
+              <div>
+                <form style="display: inline;" action="/review/id/delete" method="POST">
+                  <button type="submit" style="padding: 2px 5px">Delete</button>
+                </form>
+                <button class="edit-review" style="padding: 2px 5px">Edit</button>
+              </div>
+              <div class="hidden">
+                <form action="/review/id/edit" method="POST">
+                  <textarea style="width: 100%; padding: 5px 10px;" name="review_text" id="review_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nobis rem, deserunt similique necessitatibus dolores recusandae fugiat vitae in eius!</textarea>
+                  <input type="hidden" name="inv_id" value="">
+                  <button type="submit">Update</button>
+                </form>
+              </div>
+          </div>
+          
+          <form action="/review" method="POST">
+            <hr style="width: 100%;">
+            <p>Create a review</p>
+            <textarea style="width: 100%; padding: 5px 10px;" name="review_text" id="review_text"></textarea>
+            <input type="hidden" name="inv_id" value="">
+            <button type="submit">Create</button>
+          </form>
+
+        </div>
+      </section>
+
     </div>
+
+    <script>
+      document.querySelectorAll('.edit-review').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const form = e.target.parentElement.parentElement.children
+          form[form.length-1].classList.toggle('hidden')
+        })
+      })
+    </script>
 
 <%- include('./partials/footer') %>

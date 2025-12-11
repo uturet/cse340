@@ -112,10 +112,21 @@ body{
   max-width: 500px;
 }
 
-.card-head{
+.hidden {
+  display: none;
+}
+
+.card-head {
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+}
+
+.card-body {
+  display:flex;
+  flex-direction: column;  
   gap:12px;
   padding:12px 14px;
 }
