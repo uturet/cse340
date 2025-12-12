@@ -1,5 +1,7 @@
 const inventoryModel = require("../models/inventoryModel")
 const classificationModel = require("../models/classificationModel")
+const reviewModel = require("../models/reviewModel")
+const accountModel = require("../models/accountModel")
 
 const inventoryController = {}
 
@@ -8,6 +10,12 @@ inventoryController.buildInventory = async (req, res, next) => {
     const { id } = req.params
     const vehicle = await inventoryModel.getVehicleById(id)
     const classifications = await classificationModel.getAll()
+    const reviews = await reviewModel.getReviewByInvId(id)
+    const accounts = await accountModel.getAccountByIds(reviews.map(r => r.account_id))
+
+    for (let i = 0; i < reviews.length; i++) {
+      reviews[i].account = accounts.filter(acc => acc.account_id === reviews[i].account_id)[0]
+    }
 
     if (!vehicle) {
       req.flash("error", "Vehicle not found.")
@@ -17,6 +25,7 @@ inventoryController.buildInventory = async (req, res, next) => {
     const title = `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`
     const isAuth = res.locals.loggedin
     return res.render("inventory", {
+      reviews,
       title,
       accountData: res.locals.accountData,
       isAuth,
@@ -222,7 +231,7 @@ inventoryController.createInventory = async (req, res, next) => {
 
 inventoryController.deleteInventory = async (req, res, next) => {
   try {
-    const {id} = req.params
+    const { id } = req.params
     console.log(res.locals.loggedin, id)
     if (res.locals.loggedin && id) {
       const result = await inventoryModel.deleteInventoryItem(id)
